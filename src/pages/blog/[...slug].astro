@@ -1,0 +1,229 @@
+---
+import { getCollection } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.flatMap((post) => [
+    {
+      params: { slug: post.slug.replace(/\.mdx$/, '') },
+      props: { post },
+    },
+    {
+      params: { slug: post.slug },
+      props: { post },
+    }
+  ]);
+}
+
+const { post } = Astro.props;
+const { Content, headings: renderedHeadings } = await post.render();
+
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<BlogPost frontmatter={post.data} headings={renderedHeadings}>
+  <Content />
+</BlogPost>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const headings = document.querySelectorAll('h2, h3, h4, h5, h6');
+    
+    headings.forEach(heading => {
+      if (heading.id) {
+        const link = document.createElement('a');
+        link.href = `#${heading.id}`;
+        link.className = 'heading-link';
+        heading.appendChild(link);
+      }
+    });
+
+  });
+</script>
+
+<style>
+  .heading-link {
+    visibility: hidden;
+    margin-left: 0.5rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: normal;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+
+  h2:hover .heading-link,
+  h3:hover .heading-link,
+  h4:hover .heading-link,
+  h5:hover .heading-link,
+  h6:hover .heading-link {
+    visibility: visible;
+  }
+
+  .heading-link:hover {
+    opacity: 1;
+  }
+
+  .copy-code {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    color: #495057;
+    cursor: pointer;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+  }
+
+  .copy-code:hover {
+    background: #e9ecef;
+    border-color: #ced4da;
+  }
+
+  .copy-code:active {
+    background: #e2e6ea;
+  }
+
+  pre:hover .copy-code {
+    opacity: 1;
+  }
+
+  .copy-code.copied {
+    background: #40c057;
+    color: white;
+    border-color: #37b24d;
+  }
+
+  .copy-code.copied:hover {
+    background: #37b24d;
+  }
+
+  .post-content {
+    line-height: 1.7;
+  }
+
+  .post-content > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .post-content h2 {
+    margin-top: 2.5rem;
+    font-size: 1.8rem;
+  }
+
+  .post-content h3 {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+  }
+
+  .post-content pre {
+    background: #f8f9fa;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    padding: 0;
+    margin: 1.5rem 0;
+    border: 1px solid #e9ecef;
+  }
+
+  .code-block-container {
+    position: relative;
+    padding: 1.5rem 1rem 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .code-content {
+    overflow-x: auto;
+    padding-right: 1rem;
+  }
+
+  pre.astro-code.github-dark {
+    padding: 20px !important;
+    border-radius: 12px !important;
+    overflow: hidden; 
+  }
+
+  .post-content code {
+    font-family: 'Fira Code', 'Fira Mono', monospace;
+    font-size: 0.9em;
+  }
+
+  .post-content a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .post-content a:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+  }
+
+  .post-content blockquote {
+    border-left: 4px solid var(--accent-color);
+    margin: 1.5rem 0;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .post-content ul,
+  .post-content ol {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .post-content li {
+    margin: 0.5rem 0;
+  }
+
+  .post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+
+  .post-content th,
+  .post-content td {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .post-content th {
+    background-color: var(--bg-tertiary);
+  }
+
+  .post-content tr:nth-child(even) {
+    background-color: var(--bg-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .blog-post {
+      padding: 1rem;
+    }
+
+    .post-title {
+      font-size: 2rem;
+    }
+  }
+</style>

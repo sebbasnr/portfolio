@@ -1,0 +1,755 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { loadLottieAnimation } from '../utils/lottieLoader';
+import ParticlesBackground from '../components/ParticlesBackground.astro';
+---
+
+<ParticlesBackground client:load />
+
+<Layout title="Welcome to Astro">
+	<div class="container">
+		<div class="main-content">
+			<h1 class="reveal-on-scroll">Hey, it's Sebastián. <br> I usually work with data.</h1>
+			<p class="reveal-on-scroll">Welcome to my corner of the web where I write about design, code, startups and just about anything that interests me.</p>
+			<p class="reveal-on-scroll">Welcome to my corner of the web where I write about design, code, startups and just about anything that interests me.</p>
+
+			<div class="social-buttons reveal-on-scroll">
+				<a href="https://github.com/sebbasnr" target="_blank" rel="noopener noreferrer" class="social-button">
+					<i class="fab fa-github"></i>
+				</a>
+				<a href="https://www.linkedin.com/in/sebbasnr/" target="_blank" rel="noopener noreferrer" class="social-button">
+					<i class="fa-brands fa-linkedin"></i>
+				</a>
+				<a href="https://www.behance.net/sebastinnieto1" target="_blank" rel="noopener noreferrer" class="social-button">
+					<i class="fab fa-behance"></i>
+				</a>
+				<a href="https://x.com/sebbasnr" target="_blank" rel="noopener noreferrer" class="social-button">
+					<svg class="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+						<path d="M357.2 48L427.8 48 273.6 224.2 455 464 313 464 201.7 318.6 74.5 464 3.8 464 168.7 275.5-5.2 48 140.4 48 240.9 180.9 357.2 48zM332.4 421.8l39.1 0-252.4-333.8-42 0 255.3 333.8z"/>
+					</svg>
+				</a>
+			</div>
+			<div class="divider"></div>
+
+			<div class="work-section reveal-on-scroll">
+				<h2>Work Experience.</h2>
+				<div class="work-grid">
+					<div class="work-card">
+						<h3>Escuela Naval de Cadetes Almirante Padilla</h3>
+						<p class="work-period">Aug 2025 - Present</p>
+						<p class="work-role">Software Engineer.</p>
+						<p class="work-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+					</div>
+
+					<div class="work-card">
+						<h3>Cotecmar</h3>
+						<p class="work-period">Dec 2024 - Feb 2024</p>
+						<p class="work-role">Consultant</p>
+						<p class="work-description">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					</div>
+
+					<div class="work-card">
+						<h3>Cotecmar</h3>
+						<p class="work-period">Feb 2024 - Aug 2024</p>
+						<p class="work-role">University Internship</p>
+						<p class="work-description">I developed web software for maritime machinery, researched Industry 4.0/5.0 tech, and implemented RESTful APIs for IoT systems.</p>
+					</div>
+
+					<div class="work-card">
+						<h3>Institución Educativa Maddox</h3>
+						<p class="work-period">2019 - 2020</p>
+						<p class="work-role">Teacher</p>
+						<p class="work-description">I developed and taught Mathematics and Computer Science classes, supported students with cognitive difficulties, and maintained the institution's networks.</p>
+					</div>
+				</div>
+
+
+				<div class="resume-button-container">
+					<a href="/Resume/Resume.pdf" target="_blank" rel="noopener noreferrer" class="resume-button">
+						<span>View Full Résumé</span>
+					</a>
+				</div>
+				<div class="divider"></div>
+			</div>
+
+
+			<div class="tools-section reveal-on-scroll" id="toolsSection">
+  <div class="tools-container">
+    <div class="tools-left">
+      <h2>I like to work with:</h2>
+      <div class="tool-name" id="toolName"><span>Some tools</span></div>
+    </div>
+
+    <div class="tools-right">
+      <div class="tools-tabs" id="toolsTabs">
+        <button class="tab-btn active" data-tab="data">Data</button>
+        <button class="tab-btn" data-tab="web">Web Design</button>
+      </div>
+
+      <div class="tools-grids" id="toolsGrids">
+        <div class="tools-grid" data-panel="data">
+          <div class="tool-item" data-tool="PostgreSQL">
+            <img src="/svg/postgresql-svgrepo-com.svg" alt="PostgreSQL" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="Redis">
+            <img src="/svg/redis-svgrepo-com.svg" alt="Redis" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="Python">
+            <img src="/svg/python-svgrepo-com.svg" alt="Python" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="PHP">
+            <img src="/svg/php3-svgrepo-com.svg" alt="PHP" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="Laravel">
+            <img src="/svg/laravel-svgrepo-com.svg" alt="Laravel" class="tool-icon" />
+          </div>
+
+          <div class="tool-item" data-tool="NumPy">
+            <img src="/svg/numpy-svgrepo-com.svg" alt="NumPy" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="TensorFlow">
+            <img src="/svg/tensorflow-svgrepo-com.svg" alt="TensorFlow" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="Keras">
+            <img src="/svg/Keras.svg" alt="Keras" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="Docker">
+            <img src="/svg/docker-svgrepo-com.svg" alt="Docker" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="Apache Airflow">
+            <img src="/svg/Apache Airflow.svg" alt="Apache Airflow" class="tool-icon" />
+          </div>
+
+          <div class="tool-item" data-tool="AWS">
+            <img src="/svg/AWS.svg" alt="AWS" class="tool-icon" />
+          </div>
+        </div>
+
+          <div class="tools-grid hidden" data-panel="web">
+          <div class="tool-item" data-tool="Vue.js">
+            <img src="/svg/vue-js-svgrepo-com.svg" alt="Vue.js" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="React">
+            <img src="/svg/react-svgrepo-com.svg" alt="React" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="JavaScript">
+            <img src="/svg/javascript-svgrepo-com.svg" alt="JavaScript" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="HTML5">
+            <img src="/svg/html5-svgrepo-com.svg" alt="HTML5" class="tool-icon" />
+          </div>
+          <div class="tool-item" data-tool="CSS3">
+            <img src="/svg/css3-svgrepo-com.svg" alt="CSS3" class="tool-icon" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+		</div>
+	</div>
+</Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.getElementById('toolsSection');
+    const tabsWrap = document.getElementById('toolsTabs');
+    const tabs = Array.from(tabsWrap?.querySelectorAll('.tab-btn') || []);
+    const gridsWrap = document.getElementById('toolsGrids');
+    const grids = Array.from(gridsWrap?.querySelectorAll('.tools-grid') || []);
+    const toolNameElement = document.getElementById('toolName');
+    const toolItems = document.querySelectorAll('.tool-item');
+    const defaultToolText = 'Some tools';
+    let currentTool = defaultToolText;
+
+    function updateToolName(name) {
+      if (currentTool === name) return;
+      
+      currentTool = name;
+      const span = toolNameElement.querySelector('span');
+      span.classList.remove('animate');
+      void span.offsetWidth; // Trigger reflow
+      span.textContent = name;
+      span.classList.add('animate');
+    }
+
+    toolItems.forEach(tool => {
+      tool.addEventListener('mouseenter', () => updateToolName(tool.dataset.tool));
+      tool.addEventListener('mouseleave', () => updateToolName(defaultToolText));
+      tool.addEventListener('touchstart', () => updateToolName(tool.dataset.tool));
+    });
+
+    if (section && tabsWrap && gridsWrap) {
+      const defaultTab = 'data';
+
+      function initTabs() {
+        grids.forEach(grid => {
+          grid.style.display = grid.dataset.panel === defaultTab ? 'grid' : 'none';
+        });
+        
+        section.classList.add('open');
+        gridsWrap.classList.add('open');
+      }
+
+      function openTab(name) {
+        const isAlreadyActive = tabs.some(btn => 
+          btn.classList.contains('active') && btn.dataset.tab === name
+        );
+        
+        if (isAlreadyActive) {
+          section.classList.remove('open');
+          gridsWrap.classList.remove('open');
+          tabs.forEach(btn => btn.classList.remove('active'));
+          
+          setTimeout(() => {
+            grids.forEach(grid => grid.style.display = 'none');
+          }, 400); 
+          return;
+        }
+        
+        tabs.forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.tab === name);
+        });
+        
+        grids.forEach(grid => {
+          grid.style.display = grid.dataset.panel === name ? 'grid' : 'none';
+        });
+        
+        section.classList.add('open');
+        gridsWrap.classList.add('open');
+      }
+
+      initTabs();
+
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => openTab(btn.dataset.tab));
+      });
+    }
+
+    function isInViewport(element) {
+      const rect = element.getBoundingClientRect();
+      return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
+        rect.bottom >= 0
+      );
+    }
+
+    function handleScrollAnimation() {
+      const workCards = document.querySelectorAll('.work-card');
+      
+      workCards.forEach((card, index) => {
+        if (index === 0) {
+          card.classList.add('visible');
+          return; 
+        }
+        
+        if (isInViewport(card)) {
+          card.classList.add('visible');
+        }
+      });
+    }
+
+    handleScrollAnimation();
+    
+    window.addEventListener('scroll', handleScrollAnimation);
+
+    
+
+    const emailIcon = document.getElementById('email-icon');
+    const settingsIcon = document.getElementById('settings-icon');
+    const settingsNavIcon = document.getElementById('settings-nav-icon');
+    const newspaperIcon = document.getElementById('newspaper-icon');
+    
+
+
+    async function initAnimations() {
+      if (emailIcon) {
+        const emailAnim = await loadLottieAnimation({
+          container: emailIcon,
+          renderer: 'svg',
+          loop: false,
+          autoplay: false,
+          path: '/animated-icons/system-regular-59-email-hover-email.json'
+        });
+
+        if (emailAnim) {
+          emailIcon.addEventListener('mouseenter', () => {
+            emailAnim.goToAndPlay(0);
+          });
+        }
+      }
+
+
+      if (newspaperIcon) {
+        const newspaperAnim = await loadLottieAnimation({
+          container: newspaperIcon,
+          renderer: 'svg',
+          loop: false,
+          autoplay: false,
+          path: '/animated-icons/system-regular-76-newspaper-hover-newspaper.json'
+        });
+
+        if (newspaperAnim) {
+          newspaperIcon.addEventListener('mouseenter', () => {
+            newspaperAnim.goToAndPlay(0);
+          });
+        }
+      }
+
+      
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); 
+        }
+      });
+    }, {
+      threshold: 0.1 
+    });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(element => {
+      observer.observe(element);
+    });
+
+  });
+</script>
+
+<style>
+  .tools-section {
+    margin: 2rem 0;
+  }
+
+  .tools-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .tools-left h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .tool-name {
+    font-size: 1.1rem;
+    color: #666;
+    min-height: 1.5rem;
+  }
+
+  .tool-name span {
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+
+  .tool-name span.animate {
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tools-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+  }
+
+
+  .tools-grids {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: max-height, opacity;
+  }
+
+  .tools-grids.open {
+    max-height: 1200px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem 1rem;
+    margin: 1rem 0;
+    padding: 0;
+  }
+
+  .tools-grid.hidden {
+    display: none;
+  }
+
+  .tool-item {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .tool-icon {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.25s ease, filter 0.25s ease;
+    filter: grayscale(1) brightness(1.4);
+  }
+
+  .tool-item:hover .tool-icon {
+    filter: none;
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .tools-container {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .tools-grid {
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tool-item {
+      width: 48px;
+      height: 48px;
+    }
+
+    .tool-icon {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    border: none;
+    background: #2d2d30;
+    color: #e0e0e0;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tab-btn[data-tab="data"] {
+    background: #2563eb;
+    color: white;
+  }
+
+  .tab-btn[data-tab="web"] {
+    background: #10b981;
+    color: white;
+  }
+
+  .tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .tab-btn:active {
+    transform: translateY(0);
+  }
+
+  .tab-btn.active {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .tools-section.open .tools-tabs {
+    transform: translateY(-10px);
+  }
+
+  .tools-grids {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    width: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(0);
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  .tools-grids.open {
+    max-height: 1200px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    margin-top: 0;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem 1rem;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+  .tools-grid.hidden { display: none; opacity: 0; }
+
+  :root {
+    --card-bg: #f5f5f5;
+    --text-color: #333;
+  }
+
+  body.dark-theme {
+    --card-bg: #2d2d30;
+    --text-color: #e0e0e0;
+  }
+
+  body.light-theme .tab-btn[data-tab="data"] {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  body.light-theme .tool-item {
+    background: #f0f0f0;
+  }
+  
+  body.dark-theme .tool-item {
+    background: #2d2d30;
+  }
+
+  body.light-theme .tab-btn[data-tab="web"] {
+    background: #10b981;
+    color: white;
+  }
+
+  body.light-theme .tab-btn:hover {
+    filter: brightness(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .tools-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .header-content {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .tools-grid { 
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .light-theme {
+    body.light-theme {
+      background-color: #FBFBFB;
+    }
+
+    body.light-theme .tools-section,
+    body.light-theme .work-section,
+    body.light-theme .work-card,
+    body.light-theme .tool-item {
+      background-color: #FBFBFB;
+      color: #333334;
+    }
+
+    body.light-theme .tool-name span {
+      color: #161618;
+    }
+
+  .tools-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    align-items: start;
+    margin: 3rem 0;
+  }
+
+  .tools-left { 
+    min-width: 0; 
+  }
+  
+  .tools-right { 
+    min-width: 0; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+
+  .tools-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 1.5rem; 
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .tools-section.open .tools-tabs {
+    top: 0.5rem; 
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1.2rem; 
+    border-radius: 8px; 
+    border: 1px solid #3a3a3c;
+    background: #2d2d30; 
+    color: #e0e0e0; 
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  
+  .tab-btn[data-tab="data"] { 
+    background:#2563eb; 
+    color:#fff; 
+    border-color:#1e4fd1; 
+  }
+  
+  .tab-btn[data-tab="web"] { 
+    background:#10b981; 
+    color:#fff; 
+    border-color:#0f9f73; 
+  }
+  
+  .tab-btn:hover { 
+    transform: translateY(-2px); 
+  }
+
+  .tools-section.open .tools-tabs { 
+    transform: translateY(-8px); 
+  }
+
+  #toolsGrids {
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height .45s ease, opacity .3s ease;
+    margin-top: .5rem;
+  }
+
+  .tools-section.open #toolsGrids {
+    max-height: 1200px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem 1rem;
+  }
+  
+  .tools-grid.hidden { 
+    display: none; 
+  }
+
+  .tool-item { 
+    width:56px; 
+    height:56px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:center; 
+    border-radius:8px; 
+    background:#2a2a2a; 
+  }
+  
+  .tool-icon { 
+    width:40px; 
+    height:40px; 
+    filter: grayscale(100%) brightness(1.5); 
+    transition: transform .3s ease, filter .3s ease; 
+  }
+  
+  .tool-item:hover .tool-icon { 
+    filter:none; 
+    transform:scale(1.1); 
+  }
+
+  body.light-theme .tab-btn { 
+    background:#e0e0e0; 
+    color:#161618; 
+    border-color:#c0c0c0; 
+  }
+  
+  body.light-theme .tab-btn[data-tab="data"] { 
+    background:#3b82f6; 
+    color:#fff; 
+    border-color:#2f6fe0; 
+  }
+  
+  body.light-theme .tab-btn[data-tab="web"] { 
+    background:#10b981; 
+    color:#fff; 
+    border-color:#0f9f73; 
+  }
+
+  @media (max-width: 768px) {
+    .tools-section { 
+      grid-template-columns: 1fr; 
+      row-gap: 1rem; 
+    }
+    
+    .tools-grid { 
+      grid-template-columns: repeat(3, 1fr); 
+    }
+  }
+
+  .icon-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .icon-button {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    filter: brightness(0) invert(1); 
+  }
+
+  .icon-button:hover {
+    transform: scale(1.1);
+  }
+
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

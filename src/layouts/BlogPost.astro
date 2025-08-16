@@ -1,0 +1,220 @@
+---
+import Layout from './Layout.astro';
+import BlogTOC from '../components/BlogTOC.astro';
+
+const { frontmatter, headings } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage } = frontmatter;
+---
+
+<Layout title={title}>
+  <div class="blog-layout-grid">
+    <article class="blog-post">
+      <header class="post-header">
+        <time datetime={pubDate.toISOString()} class="post-date">
+          {new Date(pubDate).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        <h1 class="post-title">{title}</h1>
+        {description && <p class="post-description">{description}</p>}
+      </header>
+
+      {heroImage && (
+        <div class="post-hero-container">
+          <img
+            src={heroImage}
+            alt={title}
+            class="post-hero"
+            loading="lazy"
+          />
+        </div>
+      )}
+
+      <div class="post-content" style="font-size: 0.9em !important; line-height: 1.7 !important;">
+        <slot />
+      </div>
+    </article>
+    <BlogTOC headings={headings} />
+  </div>
+</Layout>
+
+<style>
+  body.light-theme pre {
+    background: #f0f0f0;
+  }
+
+  body.light-theme .post-date {
+    color: #333334;
+  }
+
+  body.light-theme .post-content :global(h2) {
+    color: #161618 !important;
+  }
+
+  body.light-theme .post-content :global(li) {
+    color: #333334 !important;
+  }
+
+  /* Code block styles */
+  pre {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5em 0;
+  }
+
+  code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 800px) 280px 1fr;
+    grid-template-areas: ". main toc ."; 
+    gap: 1rem;
+    max-width: 1400px; 
+    margin: auto;
+    padding: 1rem;
+  }
+
+  .blog-post {
+    grid-area: main; 
+    max-width: 700px; 
+    width: 100%; 
+    margin: 0 auto; 
+    padding: 0 0 2rem; 
+  }
+  
+  article.blog-post .post-content,
+  article.blog-post .post-content p,
+  article.blog-post .post-content div,
+  article.blog-post .post-content span {
+    font-size: 0.95em !important;
+    line-height: 1.7 !important;
+  }
+
+  .toc-container {
+    grid-area: toc; 
+
+  }
+
+  @media (max-width: 1023px) { 
+    .blog-layout-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas: "main";
+    }
+    .toc-container {
+      display: none;
+    }
+  }
+
+  .post-header {
+    padding: 0 30px;
+  }
+
+  .post-content {
+    padding: 0 30px;
+  }
+  
+  .post-hero-container {
+    width: 100%;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+
+  .post-date {
+    display: block;
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 12px;
+    color: white;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+
+  .post-header {
+    margin-bottom: 2rem;
+  }
+
+  .post-title {
+    font-size: 3.5rem;
+    margin: 0.5rem 0 1.5rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .post-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .updated-date {
+    margin-left: 0.5rem;
+    opacity: 0.8;
+  }
+
+  .post-hero {
+    width: 100%;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+  }
+
+  .post-content {
+    line-height: 1.7;
+    padding: 0 20px;
+  }
+  
+  .post-content :global(h2) {
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-weight: 900 !important;
+    margin: 2.5rem 0 1.5rem !important;
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    color: white !important;
+  }
+  
+  .post-content :global(h2) * {
+    font-family: inherit !important;
+    color: inherit !important;
+  }
+
+  .post-content > * + * {
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .blog-post {
+      padding: 0; 
+      margin: 0 auto; 
+    }
+
+    .post-title {
+      font-size: 3rem;
+    }
+
+    .post-date {
+      font-size: 0.8rem; 
+    }
+
+    .post-hero-container {
+      width: 100%; 
+      display: block; 
+      text-align: center; 
+      margin: 1rem auto; 
+    }
+  }
+
+    .post-content :global(li) {
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    color: white !important;
+    font-size: 17px !important;
+  }
+</style>

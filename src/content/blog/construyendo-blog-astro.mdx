@@ -1,0 +1,86 @@
+---
+title: "Construyendo un blog con Astro, Cloudflare y Resend."
+description: "Aprende a crear un blog moderno con Astro, desplegarlo en Cloudflare Pages y añadir funcionalidad de newsletter con Resend."
+pubDate: 2025-08-13
+draft: false
+tags: ["astro", "cloudflare", "resend", "tutorial"]
+heroImage: "/images/ubuntu-server-automation.B0mu2xHT_APQDW.avif"
+---
+
+¡Hola! En este artículo te mostraré cómo crear un blog moderno usando Astro, desplegarlo en Cloudflare Pages y añadir funcionalidad de newsletter con Resend. Vamos a desglosar todo el proceso paso a paso.
+
+## Por qué Astro, Cloudflare y Resend?
+
+- **Astro**: Un framework web todo en uno que te permite crear sitios rápidos con menos JavaScript.
+- **Cloudflare Pages**: Ofrece despliegues rápidos, red global y funciones serverless.
+- **Resend**: Una API para enviar correos electrónicos desde aplicaciones con facilidad.
+
+## Configuración inicial
+
+Primero, crea un nuevo proyecto de Astro:
+
+```bash
+npm create astro@latest mi-blog
+cd mi-blog
+```
+
+Instala las dependencias necesarias:
+
+```bash
+npm install @astrojs/mdx @astrojs/rss
+```
+
+## Estructura del proyecto
+
+```
+src/
+  pages/
+    blog/
+      [...page].astro    # Listado de posts
+      [...slug].astro    # Página individual de post
+  content/
+    blog/
+      mi-primer-post.mdx # Tus entradas de blog
+  layouts/
+    BlogPost.astro      # Layout para los posts
+```
+
+## Configuración de Cloudflare Pages
+
+1. Crea un repositorio en GitHub, GitLab o Bitbucket.
+2. Ve a Cloudflare Pages y selecciona tu repositorio.
+3. Configura el build:
+   - **Framework preset**: Astro
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+   - **Environment variables**: Configura las necesarias
+
+## Añadiendo Resend para newsletters
+
+1. Crea una cuenta en [Resend](https://resend.com) y obtén tu API key.
+2. Instala el SDK de Resend:
+
+```bash
+npm install resend
+```
+
+3. Crea un endpoint de API para manejar las suscripciones:
+
+```javascript
+// src/pages/api/subscribe.js
+export const post = async ({ request }) => {
+  const { email } = await request.json();
+  
+  // Aquí iría la lógica para guardar el email
+  
+  return new Response(JSON.stringify({ success: true }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
+};
+```
+
+## Conclusión
+
+Con Astro, Cloudflare Pages y Resend, puedes crear un blog rápido, escalable y con funcionalidad de newsletter sin necesidad de un backend complejo. ¡Espero que este tutorial te haya sido útil!
+

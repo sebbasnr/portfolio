@@ -1,0 +1,20 @@
+{
+  "name": "portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.3",
+    "@astrojs/rss": "^4.0.12",
+    "astro": "^5.12.9",
+    "lottie-web": "^5.13.0",
+    "particles.js": "^2.0.0",
+    "simple-icons": "^15.10.0",
+    "tsparticles": "^3.9.1"
+  }
+}

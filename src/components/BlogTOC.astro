@@ -1,0 +1,128 @@
+---
+import { setupTOC } from '../scripts/toc-highlight';
+
+interface Heading {
+  text: string;
+  slug: string;
+  depth: number;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings = [] } = Astro.props as Props;
+---
+
+<aside class="toc-container">
+  <div class="toc-inner">
+    <nav>
+      <ul class="toc-list">
+        {headings.length === 0 ? (
+          <li>No headings found.</li>
+        ) : (
+          headings.map((heading) => (
+            <li class="toc-item" style={`--level: ${heading.depth - 2}`}>
+              <a href={`#${heading.slug}`} class="toc-link">
+                {heading.text}
+              </a>
+            </li>
+          ))
+        )}
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<script>
+  import { setupTOC } from '../scripts/toc-highlight';
+  
+  if (typeof window !== 'undefined') {
+    setTimeout(() => {
+      setupTOC();
+    }, 0);
+  }
+</script>
+
+<style>
+  body.light-theme .toc-link {
+    color: #333334;
+  }
+
+  body.light-theme .toc-link:hover {
+    color: #161618;
+  }
+
+  body.light-theme .toc-link.active {
+    color: #161618; 
+  }
+
+  .toc-container {
+    position: sticky;
+    top: 6rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    padding: 0 2rem 1rem 0;
+    width: 280px;
+    flex-shrink: 0;
+    display: none; 
+  }
+
+  .toc-inner {
+    border-left: 1px solid var(--border-color);
+    padding-left: 1rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-item {
+    margin: 0.25rem 0;
+    padding-left: calc((var(--level, 0)) * 0.75rem);
+  }
+
+  .toc-link {
+    font-size: 1.2rem;
+    color: rgb(70, 70, 70); 
+    text-decoration: none;
+    line-height: 1.4;
+    display: block;
+    transition: color 0.2s ease, font-size 0.2s ease, padding-left 0.2s ease; 
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    padding-left: 0.5rem; 
+    position: relative; 
+  }
+
+  .toc-link:hover {
+    color: white;
+  }
+
+  .toc-link.active {
+    color: white;
+    font-size: 1.3rem; 
+    font-weight: 600; 
+    padding-left: 1.2rem;
+  }
+
+  .toc-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px; 
+    height: 80%; 
+    background-color: #3b82f6; 
+    border-radius: 2px; 
+    transition: all 0.2s ease; 
+  }
+
+  @media (min-width: 1024px) {
+    .toc-container {
+      display: block;
+    }
+  }
+</style>

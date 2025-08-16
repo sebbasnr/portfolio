@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ParticlesBackground from '../components/ParticlesBackground.astro';
+---
+
+<Layout title="404 - Página no encontrada">
+  <ParticlesBackground />
+  <div class="container" style="min-height: 40vh; display: flex; align-items: flex-start; justify-content: center; padding: 0 1rem 0 1rem; margin-top: -1.5rem;">
+    <style>
+      @media (min-width: 768px) {
+        .container {
+          padding-top: 4rem !important;
+        }
+      }
+    </style>
+    <div class="main-content" style="text-align: center; width: 100%; max-width: 800px; margin: 0 auto;">
+      <h1 class="floating-text">Yeesh</h1>
+      <h2 style="font-size: 2.5rem; margin: 0.5rem 0 1.5rem 0;">Page not found</h2>
+      <p style="font-size: 1.25rem; margin: 0 auto 2rem auto; max-width: 600px; line-height: 1.5;">
+        Wow, you broke the internet. Mom would be proud.
+      </p>
+      <a href="/" class="back-home">Take me to a safe place</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .back-home {
+    display: inline-block;
+    margin: 0;
+    padding: 0.75rem 1.5rem;
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .back-home:hover {
+    background-color: #2563eb;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .floating-text {
+    font-size: 5rem;
+    margin: 0 0 0.5rem 0;
+    color: #ffffff;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  h2 {
+    color: #ffffff;
+  }
+
+  p {
+    font-size: 1.25rem;
+    color: #e0e0e0;
+  }
+
+  /* Estilos para modo claro */
+  body.light-theme h1,
+  body.light-theme h2 {
+    color: #161618;
+  }
+
+  body.light-theme p {
+    color: #333334;
+  }
+</style>

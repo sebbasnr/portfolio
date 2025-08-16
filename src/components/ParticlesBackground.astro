@@ -1,0 +1,207 @@
+---
+---
+
+<div id="particles-js" style="position: fixed; inset: 0; z-index: 0; pointer-events: none;"></div>
+
+<script>
+// @ts-nocheck
+(function () {
+  const CONTAINER_ID = 'particles-js';
+  let particlesEnabled = true;
+  let themeObserver = null;
+  let isBooting = false; // Lock to prevent multiple initializations
+
+  function ensureContainer() {
+    let el = document.getElementById(CONTAINER_ID);
+    if (!el) {
+      el = document.createElement('div');
+      el.id = CONTAINER_ID;
+      el.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;';
+      document.body.prepend(el);
+    }
+    return el;
+  }
+
+  function loadParticlesLib() {
+    return new Promise((resolve, reject) => {
+      if (window.particlesJS) return resolve();
+      let s = document.querySelector('script[data-particles]');
+      if (!s) {
+        s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+        s.async = true;
+        s.dataset.particles = '1';
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      } else {
+        s.addEventListener('load', resolve, { once: true });
+      }
+    });
+  }
+
+  function getPJS() {
+    return window.pJSDom?.[0]?.pJS || null;
+  }
+
+  function destroyIfAny() {
+    const p = getPJS();
+    if (p?.fn?.vendors?.destroypJS) {
+      p.fn.vendors.destroypJS();
+    }
+    // Ensure pJSDom is always an array
+    if (!Array.isArray(window.pJSDom)) {
+      window.pJSDom = [];
+    } else {
+      window.pJSDom.length = 0;
+    }
+  }
+
+  function updateParticleColors(isLight) {
+    const p = getPJS();
+    if (!p) return;
+    const color = isLight ? '#000000' : '#ffffff';
+    p.particles.color.value = color;
+    if (p.particles.line_linked) p.particles.line_linked.color = color;
+    p.fn.particlesRefresh();
+  }
+
+  // Wait for particles to be ready
+  function waitForPJS(maxTries = 40, delay = 25) {
+    return new Promise((resolve, reject) => {
+      let tries = 0;
+      (function loop() {
+        const p = getPJS();
+        if (p) return resolve(p);
+        if (tries++ >= maxTries) return reject(new Error('ParticlesJS not initialized'));
+        setTimeout(loop, delay);
+      })();
+    });
+  }
+
+  async function checkVisualEffectsSetting() {
+    try {
+      const saved = localStorage.getItem('visualEffects');
+      return saved === null || saved === 'enabled';
+    } catch {
+      return true;
+    }
+  }
+
+  async function initParticles() {
+    if (getPJS() || !particlesEnabled || isBooting) return;
+    isBooting = true;
+    
+    try {
+      await loadParticlesLib();
+      const container = ensureContainer();
+      container.style.display = 'block';
+
+      // Ensure pJSDom is an array before creating particles
+      if (!Array.isArray(window.pJSDom)) {
+        window.pJSDom = [];
+      }
+
+      const isLight = document.body.classList.contains('light-theme');
+      const color = isLight ? '#000000' : '#ffffff';
+
+      window.particlesJS(CONTAINER_ID, {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: color },
+          shape: { type: 'circle' },
+          opacity: { value: 0.1, random: true },
+          size: { value: 3, random: true },
+          line_linked: { 
+            enable: true, 
+            distance: 150, 
+            color: color, 
+            opacity: 0.1, 
+            width: 1 
+          },
+          move: { 
+            enable: true, 
+            speed: 0.5, 
+            direction: 'none', 
+            out_mode: 'out', 
+            bounce: false 
+          }
+        },
+        interactivity: { 
+          detect_on: 'canvas', 
+          events: { 
+            onhover: { enable: false }, 
+            onclick: { enable: false }, 
+            resize: true 
+          },
+          modes: {}
+        },
+        retina_detect: true
+      });
+
+      await waitForPJS();
+      updateParticleColors(isLight);
+    } catch (error) {
+      console.error('Error initializing particles:', error);
+    } finally {
+      isBooting = false;
+    }
+  }
+
+  async function updateParticlesVisibility(explicitEnabled = null) {
+    particlesEnabled = explicitEnabled !== null ? explicitEnabled : await checkVisualEffectsSetting();
+    const container = ensureContainer();
+
+    if (particlesEnabled) {
+      container.style.display = 'block';
+      if (!getPJS()) {
+        await initParticles();
+      } else {
+        const p = getPJS();
+        if (p) {
+          p.particles.move.enable = true;
+          p.fn.particlesRefresh();
+        }
+      }
+    } else {
+      container.style.display = 'none';
+      destroyIfAny();
+    }
+  }
+
+  async function init() {
+    ensureContainer();
+    await updateParticlesVisibility();
+
+    if (themeObserver) themeObserver.disconnect();
+    themeObserver = new MutationObserver(() => {
+      if (!particlesEnabled) return;
+      updateParticleColors(document.body.classList.contains('light-theme'));
+    });
+    themeObserver.observe(document.body, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
+    });
+
+    // Listen for visual effects changes with explicit state
+    document.addEventListener('visualEffectsChanged', (e) => {
+      const enabled = typeof e?.detail?.enabled === 'boolean' ? e.detail.enabled : null;
+      updateParticlesVisibility(enabled).catch(console.error);
+    });
+
+    // Handle storage changes from other tabs
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'visualEffects') {
+        updateParticlesVisibility().catch(console.error);
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
