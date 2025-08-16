@@ -57,47 +57,123 @@ import Header from '../components/Header.astro';
   
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-      const settingsIcon = document.getElementById('settings-nav-icon');
-      if (!settingsIcon) return;
-
-      import('/src/utils/lottieLoader.js').then(({ loadLottieAnimation }) => {
-        loadLottieAnimation({
-          container: settingsIcon,
-          renderer: 'svg',
-          loop: false,
-          autoplay: false,
-          path: '/animated-icons/system-regular-63-settings-cog-hover-cog-1.json'
-        }).then(animation => {
-          if (!animation) return;
+      // Cargar lottie-web dinámicamente
+      const loadLottie = () => {
+        return new Promise((resolve) => {
+          if (window.lottie) {
+            resolve(window.lottie);
+            return;
+          }
           
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+          script.onload = () => resolve(window.lottie);
+          script.onerror = (err) => {
+            console.error('Error loading Lottie:', err);
+            resolve(null);
+          };
+          document.head.appendChild(script);
+        });
+      };
+
+      // Inicializar animación del botón de configuración
+      const initSettingsAnimation = async () => {
+        const settingsIcon = document.getElementById('settings-nav-icon');
+        if (!settingsIcon) {
+          console.warn('settings-nav-icon element not found');
+          return;
+        }
+
+        try {
+          const lottie = await loadLottie();
+          if (!lottie) {
+            console.error('Failed to load Lottie');
+            return;
+          }
+
+          const animation = lottie.loadAnimation({
+            container: settingsIcon,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            path: '/animated-icons/system-regular-63-settings-cog-hover-cog-1.json'
+          });
+
           window.settingsAnimation = animation;
           
-          const updateIconColor = () => {
+          const updateIconColor = (forceColor = null) => {
             const isLightTheme = document.body.classList.contains('light-theme');
-            const color = isLightTheme ? '#000000' : '#FFFFFF';
+            const color = isLightTheme ? '#000000' : '#FBFBFB';
+            const inactiveColor = isLightTheme ? '#333333' : '#C3C3C4';
             
             const svg = settingsIcon.querySelector('svg');
             if (svg) {
               const elements = svg.querySelectorAll('path, g, rect, circle, polygon, line');
               elements.forEach(el => {
-                el.style.stroke = color;
-                el.style.fill = color;
+                el.removeAttribute('style');
+                
+                const isBackground = el.getAttribute('fill') === '#000000' || 
+                                   el.getAttribute('stroke') === '#000000' ||
+                                   el.getAttribute('fill') === '#ffffff' ||
+                                   el.getAttribute('stroke') === '#ffffff';
+                
+                if (isBackground) {
+                  el.style.stroke = 'none';
+                  el.style.fill = 'none';
+                } else {
+                  const currentColor = forceColor || 
+                                    (settingsIcon.matches(':hover') || settingsIcon.closest('a').matches(':hover')) 
+                                    ? color : inactiveColor;
+                  
+                  el.setAttribute('stroke', currentColor);
+                  el.setAttribute('fill', currentColor);
+                  el.style.stroke = currentColor;
+                  el.style.fill = currentColor;
+                  
+                  el.removeAttribute('class');
+                }
               });
+              
+              svg.style.color = isLightTheme ? '#333333' : '#C3C3C4';
+              svg.style.transition = 'color 0.2s ease';
             }
           };
-
-          updateIconColor();
 
           const settingsLink = settingsIcon.closest('.nav-link');
           if (settingsLink) {
             settingsLink.addEventListener('mouseenter', () => {
               animation.goToAndPlay(0);
             });
+            
+            settingsLink.addEventListener('mouseenter', updateIconColor);
+            settingsLink.addEventListener('mouseleave', updateIconColor);
           }
 
+          updateIconColor();
           window.updateIconColor = updateIconColor;
-        });
-      });
+          
+          const observer = new MutationObserver(updateIconColor);
+          observer.observe(document.body, { 
+            attributes: true, 
+            attributeFilter: ['class'],
+            childList: false,
+            subtree: false
+          });
+          
+          const themeToggle = document.getElementById('theme-toggle');
+          if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+              setTimeout(updateIconColor, 10);
+            });
+          }
+          
+        } catch (error) {
+          console.error('Error initializing settings animation:', error);
+        }
+      };
+
+      // Iniciar la animación
+      initSettingsAnimation();
     });
   </script>
   
@@ -132,6 +208,27 @@ import Header from '../components/Header.astro';
 <style is:global>
   html {
     overflow-y: scroll;
+  }
+  
+  #settings-nav-icon {
+    color: #C3C3C4; 
+    transition: color 0.2s ease;
+  }
+  
+  body.light-theme #settings-nav-icon {
+    color: #333333; 
+  }
+  
+  #settings-nav-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  #settings-nav-icon path,
+  #settings-nav-icon g {
+    stroke: currentColor !important;
+    fill: currentColor !important;
+    transition: all 0.2s ease;
   }
   
   body {
@@ -173,7 +270,7 @@ import Header from '../components/Header.astro';
 	body.light-theme .social-button {
 		background-color: #e0e0e0;
 		color: #161618;
-		opacity: 1 !important; /* Asegura que el botón sea completamente opaco */
+		opacity: 1 !important;
 	}
 
 	body.light-theme .nav-link::after {
@@ -596,7 +693,7 @@ body.light-theme .nav-link:hover::after {
 		text-decoration: none;
 		transition: all 0.3s ease;
 		border: none;
-		opacity: 1 !important; /* Asegura que el botón sea completamente opaco */
+		opacity: 1 !important; 
 	}
 
 	.footer {
@@ -639,11 +736,11 @@ body.light-theme .nav-link:hover::after {
 		margin: 0;
 		font-size: 15px;
 		line-height: 1.5;
-		color: #C3C3C4; /* Color por defecto para dark mode */
+		color: #C3C3C4; 
 	}
 	
 	body.light-theme .footer-text {
-		color: #000000; /* Color para light mode */
+		color: #000000; 
 	}
 
 	@media (max-width: 768px) {
@@ -1094,8 +1191,8 @@ body.light-theme .work-section::before {
 	.tools-grid {
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
-		gap: 1.5rem 1rem; /* Reduced column gap from 2rem to 1rem */
-		margin-left: -40px; /* Keep the left alignment */
+		gap: 1.5rem 1rem; 
+		margin-left: -40px; 
 		row-gap: 1.5rem;
 	}
 
