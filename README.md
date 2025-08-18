@@ -1,7 +1,9 @@
-# Portfolio/Website/Anything else
+# 🌐 https://www.sebbasnr.com/
+
 
 Personal portfolio—a place to share projects, experience, and blog posts.  
 Still under construction (and will probably always be).
+
 
 ## Tech Stack
 
